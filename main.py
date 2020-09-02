@@ -22,6 +22,15 @@ Title_Font = pygame.font.SysFont('arial', 100)
 # Sound
 countdown_sound = pygame.mixer.Sound('countdown.wav')
 bomb_sound = pygame.mixer.Sound('bomb.wav')
+music_list = [pygame.mixer.Sound('fortnite.wav'),
+              pygame.mixer.Sound('mc1.wav'),
+              pygame.mixer.Sound('mc2.wav'),
+              pygame.mixer.Sound('elektrisk.wav'),
+              pygame.mixer.Sound('alvin.wav'),
+              pygame.mixer.Sound('power.wav'),
+              pygame.mixer.Sound('JB.wav'),
+              pygame.mixer.Sound('kahootMusic.wav'),
+              pygame.mixer.Sound('elektrisk2.wav')]
 
 
 # Button class
@@ -103,7 +112,10 @@ def start_meny():
 def game():
     run = True
     start_time = time.time()
-    random_time = random.randint(5, 40)
+    random_time = random.randint(5, 60)
+    r_music = random.randint(0, len(music_list))
+    music = music_list[r_music]
+    print(music)
     while run:
         win.fill(WHITE)
 
@@ -119,10 +131,13 @@ def game():
                 countdown_sound.play()
             print_message(int(countdown_time - elapsed_time), 'center')
         else:
+            music.play()
+
             game_time = time.time() - start_time
             countdown = int(random_time - game_time)
             print(countdown)
             if countdown < 0:
+                music.stop()
                 bomb_sound.play()
                 start_meny()
             print_message('Start', 'center')
